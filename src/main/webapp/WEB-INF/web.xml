@@ -1,0 +1,23 @@
+<web-app>
+    <!-- Ensure we have a constraint that means all endpoints can only be accessed by securitytest group-->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>MySoapService</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>securitytest</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <!-- This is recommended, but I'm not sure why ... we're not trying to do Basic Auth -->
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>ApplicationRealm</realm-name>
+    </login-config>
+
+    <security-role>
+        <description>The role that is required to access the secure service</description>
+        <role-name>securitytest</role-name>
+    </security-role>
+</web-app>

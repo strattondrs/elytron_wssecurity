@@ -1,0 +1,4 @@
+<jboss-web>
+    <!-- Ensure we link up to our defined security domain for Elytron -->
+    <security-domain>mySecurityDomain</security-domain>
+</jboss-web>

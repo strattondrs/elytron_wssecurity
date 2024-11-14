@@ -1,0 +1,7 @@
+<webservices xmlns="http://www.jboss.com/xml/ns/javaee" version="1.2">
+    <config-name>Secure-Endpoint-Config</config-name>
+    <property>
+        <name>cxf.interceptors.in</name>
+        <value>org.jboss.wsf.stack.cxf.security.authentication.SubjectCreatingInterceptor, org.jboss.wsf.stack.cxf.security.authentication.SimpleAuthorizingInterceptor</value>
+    </property>
+</webservices>

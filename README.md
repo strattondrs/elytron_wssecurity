@@ -31,6 +31,10 @@ Execute the script `doIt.ps1`
 * Build the Docker image (e.g. `docker build -t elytron .` )
 * Run the image (e.g. `docker run --rm --name wildfly -e DEBUG_PORT="*:8787" -p 8080:8080 -p 8443:8443 -p 9990:9990 -p 8787:8787 -p 1099:1099 -it elytron /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0 --debug`)
 
+### Testing details
+
+In the postman folder you will find a collection with 4 Requests.
+
 ## Problem to solve
 
 * XML only configuration

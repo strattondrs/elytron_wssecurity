@@ -524,6 +524,28 @@
             </endpoint-config>
             <endpoint-config name="Secure-Endpoint-Config">
                 <property name="schema-validation-enabled" value="false"/>
+
+                <!-- Without either a pre-handler-chain, or a ws-security.callback-handler, it deems there's no security action
+                     to be performed and does nothing.
+                 -->
+
+                <!-- This will trigger a response, if a BASIC authentication is sent but these Interceptors aren't JAX-WS handlers
+                     Are there any in-built handlers to extract the SOAP header and delegate to Elytron?
+                 -->
+                <!--
+                <pre-handler-chain name="soap-handlers">
+                    <handler name="simpleSubj" class="org.jboss.wsf.stack.cxf.security.authentication.SubjectCreatingInterceptor" />
+                    <handler name="simpleAuth" class="org.apache.cxf.interceptor.security.SimpleAuthorizingInterceptor" />
+                </pre-handler-chain>
+                -->
+
+                <!-- java.lang.ClassNotFoundException: org.apache.cxf.ws.security.wss4j.UsernameTokenCallbackHandler from [Module "org.apache.cxf.impl" from local module loader -->
+                <!--<property name="ws-security.callback-handler" value="org.apache.cxf.ws.security.wss4j.UsernameTokenCallbackHandler" />-->
+
+                <!-- java.lang.NoSuchMethodException: org.jboss.wsf.stack.cxf.security.authentication.callback.UsernameTokenCallbackHandler.<init>() -->
+                <!-- <property name="ws-security.callback-handler" value="org.jboss.wsf.stack.cxf.security.authentication.callback.UsernameTokenCallbackHandler" /> -->
+                 
+                <property name="ws-security.ut.validator" value="org.jboss.wsf.stack.cxf.security.authentication.UsernameTokenValidator" />
             </endpoint-config>
             <client-config name="Standard-Client-Config"/>
         </subsystem>

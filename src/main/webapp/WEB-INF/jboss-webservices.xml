@@ -1,5 +1,7 @@
 <webservices xmlns="http://www.jboss.com/xml/ns/javaee" version="1.2">
+    <!-- This should define us against the greater config in standalone.xml -->
     <config-name>Secure-Endpoint-Config</config-name>
+    <!-- IN theory, this adds the interceptors, but appears to do nothing? -->
     <property>
         <name>cxf.interceptors.in</name>
         <value>org.jboss.wsf.stack.cxf.security.authentication.SubjectCreatingInterceptor, org.jboss.wsf.stack.cxf.security.authentication.SimpleAuthorizingInterceptor</value>

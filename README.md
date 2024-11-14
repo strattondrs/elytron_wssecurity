@@ -30,3 +30,10 @@ Execute the script `doIt.ps1`
 * Build the WAR file (e.g. `mvn clean verify`)
 * Build the Docker image (e.g. `docker build -t elytron .` )
 * Run the image (e.g. `docker run --rm --name wildfly -e DEBUG_PORT="*:8787" -p 8080:8080 -p 8443:8443 -p 9990:9990 -p 8787:8787 -p 1099:1099 -it elytron /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0 --debug`)
+
+## Problem to solve
+
+* XML only configuration
+* No need for an HTTP Basic authorization header to be sent
+* Security processed via WS-Security header
+* Maps to an Elytron domain and validates the user's credential and group membership

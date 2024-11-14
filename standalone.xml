@@ -39,6 +39,9 @@
         <extension module="org.wildfly.extension.security.manager"/>
         <extension module="org.wildfly.extension.undertow"/>
     </extensions>
+    <system-properties>
+        <property name="org.apache.cxf.logging.enabled" value="true"/>
+    </system-properties>
     <management>
         <audit-log>
             <formatters>
@@ -72,7 +75,7 @@
     <profile>
         <subsystem xmlns="urn:jboss:domain:logging:8.0">
             <console-handler name="CONSOLE">
-                <level name="INFO"/>
+                <level name="TRACE"/>
                 <formatter>
                     <named-formatter name="COLOR-PATTERN"/>
                 </formatter>
@@ -92,13 +95,31 @@
                 <level name="WARN"/>
             </logger>
             <logger category="org.jboss.as.config">
-                <level name="DEBUG"/>
+                <level name="TRACE"/>
             </logger>
             <logger category="sun.rmi">
                 <level name="WARN"/>
             </logger>
+            <logger category="org.wildfly.elytron"><level name="TRACE"/></logger>
+            <logger category="org.wildfly.extension.elytron"><level name="TRACE"/></logger>
+            <logger category="org.wildfly.security"><level name="TRACE"/></logger>
+            <logger category="org.wildfly.security.http.servlet"><level name="TRACE"/></logger>
+            <logger category="org.jboss.ejb"><level name="TRACE"/></logger>
+            <logger category="org.jboss.security"><level name="TRACE"/></logger>
+            <logger category="org.jboss.ws"><level name="TRACE"/></logger>
+            <logger category="org.jboss.as.security"><level name="TRACE"/></logger>
+            <logger category="org.jboss.as.ejb3"><level name="TRACE"/></logger>
+            <logger category="org.jboss.as.ejb3.invocation"><level name="TRACE"/></logger>
+            <logger category="org.jboss.as.webservices"><level name="TRACE"/></logger>
+            <logger category="org.jboss.ws.cxf"><level name="TRACE"/></logger>
+            <logger category="org.jboss.wsf.stack.cxf.security"><level name="TRACE"/></logger>
+            <logger category="org.apache.cxf"><level name="TRACE"/></logger>
+            <logger category="org.apache.cxf.ws.security"><level name="TRACE"/></logger>
+            <logger category="javax.xml.ws"><level name="TRACE"/></logger>
+            <logger category="com.sun.xml.ws"><level name="TRACE"/></logger>
+            <logger category="io.undertow.request.security"><level name="TRACE"/></logger>
             <root-logger>
-                <level name="INFO"/>
+                <level name="TRACE"/>
                 <handlers>
                     <handler name="CONSOLE"/>
                     <handler name="FILE"/>
@@ -212,6 +233,7 @@
             <default-security-domain value="other"/>
             <application-security-domains>
                 <application-security-domain name="other" security-domain="ApplicationDomain"/>
+                <application-security-domain name="mySecurityDomain" security-domain="ApplicationDomain"/>
             </application-security-domains>
             <default-missing-method-permissions-deny-access value="true"/>
             <statistics enabled="${wildfly.ejb3.statistics-enabled:${wildfly.statistics-enabled:false}}"/>
@@ -237,6 +259,9 @@
                 <security-domain name="ApplicationDomain" default-realm="ApplicationRealm" permission-mapper="default-permission-mapper">
                     <realm name="ApplicationRealm" role-decoder="groups-to-roles"/>
                     <realm name="local"/>
+                </security-domain>
+                <security-domain name="mySecurityDomain" default-realm="ApplicationRealm" permission-mapper="default-permission-mapper">
+                    <realm name="ApplicationRealm" role-decoder="groups-to-roles"/>
                 </security-domain>
             </security-domains>
             <security-realms>
@@ -286,6 +311,13 @@
                     </mechanism-configuration>
                 </http-authentication-factory>
                 <http-authentication-factory name="application-http-authentication" security-domain="ApplicationDomain" http-server-mechanism-factory="global">
+                    <mechanism-configuration>
+                        <mechanism mechanism-name="BASIC">
+                            <mechanism-realm realm-name="ApplicationRealm"/>
+                        </mechanism>
+                    </mechanism-configuration>
+                </http-authentication-factory>
+                <http-authentication-factory name="sample-http-authentication" security-domain="mySecurityDomain" http-server-mechanism-factory="global">
                     <mechanism-configuration>
                         <mechanism mechanism-name="BASIC">
                             <mechanism-realm realm-name="ApplicationRealm"/>
@@ -464,6 +496,7 @@
                 <host name="default-host" alias="localhost">
                     <location name="/" handler="welcome-content"/>
                     <http-invoker http-authentication-factory="application-http-authentication"/>
+                    <filter-ref name="http-dumper"/>
                 </host>
             </server>
             <servlet-container name="default">
@@ -475,7 +508,11 @@
             </handlers>
             <application-security-domains>
                 <application-security-domain name="other" security-domain="ApplicationDomain"/>
+                <application-security-domain name="mySecurityDomain" security-domain="ApplicationDomain"/>
             </application-security-domains>
+            <filters>
+                <filter name="http-dumper" class-name="io.undertow.server.handlers.RequestDumpingHandler" module="io.undertow.core"/>
+            </filters>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:webservices:2.0" statistics-enabled="${wildfly.webservices.statistics-enabled:${wildfly.statistics-enabled:false}}">
             <wsdl-host>${jboss.bind.address:127.0.0.1}</wsdl-host>
@@ -484,6 +521,9 @@
                 <pre-handler-chain name="recording-handlers" protocol-bindings="##SOAP11_HTTP ##SOAP11_HTTP_MTOM ##SOAP12_HTTP ##SOAP12_HTTP_MTOM">
                     <handler name="RecordingHandler" class="org.jboss.ws.common.invocation.RecordingServerHandler"/>
                 </pre-handler-chain>
+            </endpoint-config>
+            <endpoint-config name="Secure-Endpoint-Config">
+                <property name="schema-validation-enabled" value="false"/>
             </endpoint-config>
             <client-config name="Standard-Client-Config"/>
         </subsystem>

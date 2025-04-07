@@ -88,38 +88,30 @@
                 <suffix value=".yyyy-MM-dd"/>
                 <append value="true"/>
             </periodic-rotating-file-handler>
-            <logger category="com.arjuna">
-                <level name="WARN"/>
-            </logger>
-            <logger category="io.jaegertracing.Configuration">
-                <level name="WARN"/>
-            </logger>
-            <logger category="org.jboss.as.config">
-                <level name="TRACE"/>
-            </logger>
-            <logger category="sun.rmi">
-                <level name="WARN"/>
-            </logger>
-            <logger category="org.wildfly.elytron"><level name="TRACE"/></logger>
-            <logger category="org.wildfly.extension.elytron"><level name="TRACE"/></logger>
-            <logger category="org.wildfly.security"><level name="TRACE"/></logger>
-            <logger category="org.wildfly.security.http.servlet"><level name="TRACE"/></logger>
-            <logger category="org.jboss.ejb"><level name="TRACE"/></logger>
-            <logger category="org.jboss.security"><level name="TRACE"/></logger>
-            <logger category="org.jboss.ws"><level name="TRACE"/></logger>
-            <logger category="org.jboss.as.security"><level name="TRACE"/></logger>
-            <logger category="org.jboss.as.ejb3"><level name="TRACE"/></logger>
-            <logger category="org.jboss.as.ejb3.invocation"><level name="TRACE"/></logger>
-            <logger category="org.jboss.as.webservices"><level name="TRACE"/></logger>
-            <logger category="org.jboss.ws.cxf"><level name="TRACE"/></logger>
-            <logger category="org.jboss.wsf.stack.cxf.security"><level name="TRACE"/></logger>
-            <logger category="org.apache.cxf"><level name="TRACE"/></logger>
-            <logger category="org.apache.cxf.ws.security"><level name="TRACE"/></logger>
-            <logger category="javax.xml.ws"><level name="TRACE"/></logger>
-            <logger category="com.sun.xml.ws"><level name="TRACE"/></logger>
+            <logger category="com.arjuna"><level name="WARN"/></logger>
+            <logger category="com.sun.xml.ws"><level name="WARN"/></logger>
+            <logger category="io.jaegertracing.Configuration"><level name="WARN"/></logger>
             <logger category="io.undertow.request.security"><level name="TRACE"/></logger>
+            <logger category="javax.xml.ws"><level name="WARN"/></logger>
+            <logger category="org.apache.cxf.w.security"><level name="DEBUG"/></logger>
+            <logger category="org.apache.cxf"><level name="DEBUG"/></logger>
+            <logger category="org.jboss.as.config"><level name="DEBUG"/></logger>
+            <logger category="org.jboss.as.ejb3.invocation"><level name="DEBUG"/></logger>
+            <logger category="org.jboss.as.ejb3"><level name="DEBUG"/></logger>
+            <logger category="org.jboss.as.security"><level name="DEBUG"/></logger>
+            <logger category="org.jboss.as.webservices"><level name="DEBUG"/></logger>
+            <logger category="org.jboss.ejb"><level name="WARN"/></logger>
+            <logger category="org.jboss.security"><level name="DEBUG"/></logger>
+            <logger category="org.jboss.ws.cxf"><level name="DEBUG"/></logger>
+            <logger category="org.jboss.ws"><level name="WARN"/></logger>
+            <logger category="org.jboss.wsf.stack.cxf.security"><level name="TRACE"/></logger>
+            <logger category="org.wildfly.elytron"><level name="DEBUG"/></logger>
+            <logger category="org.wildfly.extension.elytron"><level name="DEBUG"/></logger>
+            <logger category="org.wildfly.security.http.servlet"><level name="TRACE"/></logger>
+            <logger category="org.wildfly.security"><level name="DEBUG"/></logger>
+            <logger category="sun.rmi"><level name="WARN"/></logger>
             <root-logger>
-                <level name="TRACE"/>
+                <level name="DEBUG"/>
                 <handlers>
                     <handler name="CONSOLE"/>
                     <handler name="FILE"/>

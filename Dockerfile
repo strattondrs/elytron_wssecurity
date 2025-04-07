@@ -11,4 +11,4 @@ RUN cd /opt/jboss/wildfly/bin && \
 COPY standalone.xml                  /opt/jboss/wildfly/standalone/configuration
 
 # Deploy the EAR/WAR
-ADD target/my-soap-service-1.0-SNAPSHOT.war /opt/jboss/wildfly/standalone/deployments/
+ADD ear/target/my-soapy-ear-1.0-SNAPSHOT.ear /opt/jboss/wildfly/standalone/deployments/

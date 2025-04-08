@@ -97,18 +97,19 @@
             <logger category="org.apache.cxf"><level name="DEBUG"/></logger>
             <logger category="org.jboss.as.config"><level name="DEBUG"/></logger>
             <logger category="org.jboss.as.ejb3.invocation"><level name="DEBUG"/></logger>
-            <logger category="org.jboss.as.ejb3"><level name="DEBUG"/></logger>
+            <logger category="org.jboss.as.ejb3"><level name="TRACE"/></logger>
             <logger category="org.jboss.as.security"><level name="DEBUG"/></logger>
             <logger category="org.jboss.as.webservices"><level name="DEBUG"/></logger>
             <logger category="org.jboss.ejb"><level name="WARN"/></logger>
             <logger category="org.jboss.security"><level name="DEBUG"/></logger>
             <logger category="org.jboss.ws.cxf"><level name="DEBUG"/></logger>
+            <logger category="org.jboss.ws.cxf.security"><level name="TRACE" /></logger>
             <logger category="org.jboss.ws"><level name="WARN"/></logger>
             <logger category="org.jboss.wsf.stack.cxf.security"><level name="TRACE"/></logger>
             <logger category="org.wildfly.elytron"><level name="DEBUG"/></logger>
             <logger category="org.wildfly.extension.elytron"><level name="DEBUG"/></logger>
             <logger category="org.wildfly.security.http.servlet"><level name="TRACE"/></logger>
-            <logger category="org.wildfly.security"><level name="DEBUG"/></logger>
+            <logger category="org.wildfly.security"><level name="TRACE"/></logger>
             <logger category="sun.rmi"><level name="WARN"/></logger>
             <root-logger>
                 <level name="DEBUG"/>
@@ -225,7 +226,7 @@
             <default-security-domain value="other"/>
             <application-security-domains>
                 <application-security-domain name="other" security-domain="ApplicationDomain"/>
-                <application-security-domain name="mySecurityDomain" security-domain="ApplicationDomain"/>
+                <application-security-domain name="mySecurityDomain" security-domain="SecDomainDean"/>
             </application-security-domains>
             <default-missing-method-permissions-deny-access value="true"/>
             <statistics enabled="${wildfly.ejb3.statistics-enabled:${wildfly.statistics-enabled:false}}"/>
@@ -252,7 +253,7 @@
                     <realm name="ApplicationRealm" role-decoder="groups-to-roles"/>
                     <realm name="local"/>
                 </security-domain>
-                <security-domain name="mySecurityDomain" default-realm="ApplicationRealm" permission-mapper="default-permission-mapper">
+                <security-domain name="SecDomainDean" default-realm="ApplicationRealm" permission-mapper="default-permission-mapper">
                     <realm name="ApplicationRealm" role-decoder="groups-to-roles"/>
                 </security-domain>
             </security-domains>
@@ -309,7 +310,7 @@
                         </mechanism>
                     </mechanism-configuration>
                 </http-authentication-factory>
-                <http-authentication-factory name="sample-http-authentication" security-domain="mySecurityDomain" http-server-mechanism-factory="global">
+                <http-authentication-factory name="sample-http-authentication" security-domain="SecDomainDean" http-server-mechanism-factory="global">
                     <mechanism-configuration>
                         <mechanism mechanism-name="BASIC">
                             <mechanism-realm realm-name="ApplicationRealm"/>
@@ -500,7 +501,7 @@
             </handlers>
             <application-security-domains>
                 <application-security-domain name="other" security-domain="ApplicationDomain"/>
-                <application-security-domain name="mySecurityDomain" security-domain="ApplicationDomain"/>
+                <application-security-domain name="mySecurityDomain" security-domain="SecDomainDean"/>
             </application-security-domains>
             <filters>
                 <filter name="http-dumper" class-name="io.undertow.server.handlers.RequestDumpingHandler" module="io.undertow.core"/>
